@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add/Edit Event</title>
+    <style>
+        body {
+            width: 800px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Add or Edit Event</h1>
+</header>
+<main>
+    <form th:method="POST" th:action="|${event != null ? '/events/edit/' + event.id : '/events/add'}|">
+        <div>
+            <label for="name">Event Name:</label>
+            <input type="text" id="name" name="name" th:value="(${event} != null ? ${event.getName()} : '')" required>
+        </div>
+        <div>
+<!--            <input type="hidden" id="eventId" name="eventId" th:value="(${event} != null ? ${event.getId()} : '')" required>-->
+        </div>
+        <div>
+            <label for="description">Event Description:</label>
+            <input id="description" name="description" required
+                   th:value="(${event} != null ? ${event.getDescription()} : '')"/>
+        </div>
+        <div>
+            <label for="popularityScore">Popularity Score:</label>
+            <input type="number" id="popularityScore" name="popularityScore"
+                   th:value="(${event} != null ? ${event.getPopularityScore()} : '')" required>
+        </div>
+        <div>
+            <label for="ticketsAvailable">Tickets available:</label>
+            <input type="number" id="ticketsAvailable" name="ticketsAvailable"
+                   th:value="(${event} != null ? ${event.getTickets()} : '')" required >
+        </div>
+        <div>
+            <label for="locationId">Location:</label>
+            <select name="locationId" id="locationId" required>
+                <option th:if="${event} != null"
+                        th:selected="${event.location != null && event.location.id == location.id}"
+                        th:each="location : ${locations}"
+                        th:value="${location.id}"
+                        th:text="${location.name}"
+                ></option>
+                <option th:if="${event} == null"
+                        th:each="location : ${locations}"
+                        th:text="${location.getName()}"
+                        th:value="${location.getId()}"
+                >
+                </option>
+            </select>
+
+        </div>
+        <button type="submit">Save Event</button>
+    </form>
+</main>
+</body>
+</html>
