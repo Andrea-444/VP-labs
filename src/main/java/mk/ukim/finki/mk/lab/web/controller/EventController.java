@@ -11,10 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Controller
-@RequestMapping(value = "/events")
+@RequestMapping(value = {"/","/events"})
 public class EventController {
 
     private final EventService eventService;
@@ -26,7 +27,12 @@ public class EventController {
     }
 
     @GetMapping()
-    public String getEventsPage(@RequestParam(required = false) String error, Model model, HttpSession session) {
+    public String getEventsPage( @RequestParam(required = false) String searchText,
+                                 @RequestParam(required = false) Double minRating,
+                                 @RequestParam(required = false) Long locationId,
+                                 @RequestParam(required = false) String error,
+                                 Model model, HttpSession session) {
+        List<Event> eventList = eventService.searchEvents(searchText, minRating, locationId);
         if (error != null && !error.isEmpty()) {
             model.addAttribute("hasError", true);
             model.addAttribute("error", error);
@@ -38,7 +44,12 @@ public class EventController {
 //            likedEvents = new HashSet<>();
 //        }
 
-        model.addAttribute("events", eventService.listAll());
+        model.addAttribute("searchText", searchText);
+        model.addAttribute("minRating", minRating);
+        model.addAttribute("selectedLocationId", locationId);
+        model.addAttribute("locations", locationService.findAll());
+        model.addAttribute("events", eventList);
+        model.addAttribute("error", error);
 //        model.addAttribute("likedEvents", likedEvents);
         return "listEvents";
     }

@@ -25,13 +25,22 @@
     <h2>Search for events:</h2>
     <form method="GET" th:action="@{/events}">
         <h3>Search Events</h3>
-        <label for="searchTxt">By Event Name:</label>
-        <input type="text" name="searchTxt" id="searchTxt" placeholder="Search an event" th:value="${param.searchTxt}">
+        <label for="searchText">By Event Name:</label>
+        <input type="text" name="searchText" id="searchText" placeholder="Search an event" th:value="${param.searchText}">
         <br/>
-        <label for="rating">By Minimum Event Rating: </label>
-        <input type="number" name="rating" id="rating" min="0" max="10" placeholder="Min Rating"
-               th:value="${param.rating}">
+        <label for="minRating">By Minimum Event Rating: </label>
+        <input type="number" name="minRating" id="minRating" min="0" max="10" placeholder="Min Rating"
+               th:value="${param.minRating}">
         <br/>
+        <label for="locationId">Filter by Location:</label>
+        <select id="locationId" name="locationId">
+            <option value="">All Locations</option>
+            <option th:each="location : ${locations}"
+                    th:value="${location.id}"
+                    th:text="${location.name}"
+                    th:selected="${selectedLocationId != null && selectedLocationId == location.id}">
+            </option>
+        </select>
         <!--    <label for="category">By Category:</label>-->
         <!--    <select name="category" id="category">-->
         <!--      <option value="Music">Music</option>-->

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public class EventBookingRepository {
+public class InMemoryEventBookingRepository {
     public Optional<Event> findById(long id){
         return DataHolder.getEvents().stream().filter(e -> e.getId() == id).findFirst();
     }

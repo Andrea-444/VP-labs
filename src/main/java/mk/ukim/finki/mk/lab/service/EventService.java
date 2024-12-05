@@ -9,9 +9,9 @@ import java.util.Optional;
 
 public interface EventService {
     List<Event> listAll();
-    List<Event> searchEvents(String text, Double minRating);
+    List<Event> searchEvents(String text, Double minRating,Long locationId);
     //List<Event> searchEventsByCategory(Category category);
-
+    List<Event> findAllByLocation_Id(Long locationId);
     Optional<Event> saveEvent(String name, String description, double popularityScore, Long id, int tickets) throws LocationNotFoundException;
 
     Optional<Event> editEvent(Long eventId, String name, String description, double popularityScore, Long id, int tickets) throws LocationNotFoundException, EventNotFoundException;
@@ -19,5 +19,5 @@ public interface EventService {
     void deleteEvent(Long id);
     Optional<Event> findEventById(Long id);
 
-    Optional<Event> changePopScore(Long eventId) throws EventNotFoundException;
+    //Optional<Event> changePopScore(Long eventId) throws EventNotFoundException;
 }

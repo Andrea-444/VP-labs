@@ -1,13 +1,21 @@
 package mk.ukim.finki.mk.lab.model;
 
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@Entity
+@NoArgsConstructor
 public class Event {
     String name;
     String description;
     double popularityScore;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+//    @OneToMany
+    @ManyToOne
     private Location location;
     int tickets;
 //
@@ -19,7 +27,7 @@ public class Event {
         this.name = name;
         this.description = description;
         this.popularityScore = popularityScore;
-        this.id = (long) (Math.random() * 1000);
+//        this.id = (long) (Math.random() * 1000);
         this.location = location;
         this.tickets = tickets;
 
