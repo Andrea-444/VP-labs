@@ -25,12 +25,6 @@
     <header>
         <h1>Event Booking Page - Booking Confirmation</h1>
     </header>
-    <!-- Error handling section if necessary -->
-    <!--
-    <div th:if="${error}" class="error-message">
-      <p th:text="${error}"></p>
-    </div>
-    -->
 
     <table>
         <tr>
@@ -43,6 +37,10 @@
         <tr>
             <td><b>Attendee Address</b></td>
             <td th:text="${booking.attendeeAddress}"></td>
+        </tr>
+        <tr>
+            <td><b>Username</b></td>
+            <td th:text="${booking.user.username}"></td>
         </tr>
         <tr>
             <td><b>Client IP Address</b></td>

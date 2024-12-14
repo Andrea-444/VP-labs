@@ -127,19 +127,16 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<Event> findAllByLocation_Id(Long locationId) {
         return eventRepository.findAllByLocation_Id(locationId);    }
-//
-//    @Override
-//    public List<Event> searchEvents(String text, Double minRating) {
-//        return eventRepository.searchEvents(text,minRating);
-//    }
 
-//    @Override
-//    public List<Event> searchEventsByCategory(Category category) {
-//        return eventRepository.searchEventsByCategory(category);
-//    }
 
     @Override
     public Optional<Event> saveEvent(String name, String description, double popularityScore, Long locationId, int tickets) throws LocationNotFoundException {
+//        if (!eventRepository.findByNameContainingIgnoreCase(name).isEmpty()) {
+//            throw new IllegalArgumentException("An event with this name already exists.");
+//        }
+//        if (!eventRepository.findAllByLocation_Id(locationId).isEmpty()) {
+//            throw new IllegalArgumentException("An event with this location ID already exists.");
+//        }
         Event event = new Event();
         event.setName(name);
         event.setDescription(description);
@@ -148,14 +145,24 @@ public class EventServiceImpl implements EventService {
         Optional<Location> location = locationRepository.findById(locationId);
 
         if (location.isPresent()) {
+
             event.setLocation(location.get());
             return Optional.of(eventRepository.save(event));
         }
-        throw new IllegalArgumentException("Invalid location ID or category ID");
+        throw new IllegalArgumentException("Invalid location ID");
     }
 
     @Override
     public Optional<Event> editEvent(Long eventId, String name, String description, double popularityScore, Long locationId, int tickets) throws LocationNotFoundException, EventNotFoundException {
+//        if (eventRepository.findByNameContainingIgnoreCase(name).stream()
+//                .anyMatch(event -> !event.getId().equals(eventId))) {
+//            throw new IllegalArgumentException("An event with this name already exists.");
+//        }
+//
+//        if (eventRepository.findAllByLocation_Id(locationId).stream()
+//                .anyMatch(event -> !event.getId().equals(eventId))) {
+//            throw new IllegalArgumentException("An event with this location ID already exists.");
+//        }
         Optional<Event> eventOptional = eventRepository.findById(eventId);
         if (eventOptional.isPresent()) {
             Event event = eventOptional.get();
@@ -166,6 +173,8 @@ public class EventServiceImpl implements EventService {
 
             Optional<Location> location = locationRepository.findById(locationId);
             if (location.isPresent()) {
+
+                event.setLocation(location.get());
                 event.setLocation(location.get());
                 return Optional.of(eventRepository.save(event));
             }
@@ -185,11 +194,6 @@ public class EventServiceImpl implements EventService {
 //    @Override
 //    public Optional<Event> changePopScore(Long eventId) throws EventNotFoundException {
 //        return this.eventRepository.changeRating(eventId);
-//    }
-
-//    @Override
-//    public List<Event> findAllByLocation_Id(Long locationId) {
-//        return eventRepository.findAllByLocation_Id(locationId);
 //    }
 
 

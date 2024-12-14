@@ -25,16 +25,17 @@ public class EventBookingController {
 
     @PostMapping
     public String placeBooking(@RequestParam Long eventId,
-                                @RequestParam String eventName,
+                               @RequestParam String eventName,
                                @RequestParam String attendeeName,
                                @RequestParam String attendeeAddress,
                                @RequestParam int numTickets,
+                               @RequestParam String username,
                                HttpServletRequest request,
                                Model model) {
         String clientIp = request.getRemoteAddr();
         model.addAttribute("clientIp", clientIp);
 
-        EventBooking booking = eventBookingService.placeBooking(eventId,eventName, attendeeName, attendeeAddress, numTickets);
+        EventBooking booking = eventBookingService.placeBooking(eventId,eventName, attendeeName, attendeeAddress, numTickets,username);
         model.addAttribute("booking", booking);
 
         return "bookingConfirmation";

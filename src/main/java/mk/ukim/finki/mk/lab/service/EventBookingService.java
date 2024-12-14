@@ -3,6 +3,6 @@ package mk.ukim.finki.mk.lab.service;
 import mk.ukim.finki.mk.lab.model.EventBooking;
 
 public interface EventBookingService{
-    EventBooking placeBooking(Long eventId, String eventName, String attendeeName, String attendeeAddress, int numberOfTickets);
+    EventBooking placeBooking(Long eventId, String eventName, String attendeeName, String attendeeAddress, int numberOfTickets, String username);
 
 }

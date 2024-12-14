@@ -21,6 +21,12 @@ CREATE TABLE "public"."event" (
     PRIMARY KEY ("id")
 );
 
+CREATE TABLE "public"."app_users" (
+    "username" varchar(255) NOT NULL,
+   	 "name" varchar(255),
+    PRIMARY KEY ("username")
+);
+
 -- Table Definition: event_booking
 CREATE TABLE "public"."event_booking" (
     "id" int8 NOT NULL,

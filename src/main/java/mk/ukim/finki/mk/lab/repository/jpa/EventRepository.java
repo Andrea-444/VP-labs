@@ -10,8 +10,6 @@ import java.util.List;
 public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> findAllByLocation_Id(Long locationId);
     List<Event> findByPopularityScoreGreaterThanEqual(Double popularityScore);
-    List<Event> findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String name, String description);
-    List<Event> findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCaseAndPopularityScoreGreaterThanEqual(String name, String description, Double popularityScore);
     List<Event> findByNameContainingIgnoreCase(String name);
     List<Event> findByNameContainingIgnoreCaseAndPopularityScoreGreaterThanEqualAndLocation_Id(
             String name,

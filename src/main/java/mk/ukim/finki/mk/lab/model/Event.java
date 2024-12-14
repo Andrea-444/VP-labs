@@ -4,10 +4,14 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Entity
 @NoArgsConstructor
 public class Event {
+//    @Column(unique = true)
     String name;
     String description;
     double popularityScore;
@@ -15,7 +19,9 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 //    @OneToMany
+
     @ManyToOne
+//    @JoinColumn(unique = true)
     private Location location;
     int tickets;
 //

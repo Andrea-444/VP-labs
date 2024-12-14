@@ -15,6 +15,9 @@
     <h1>Add or Edit Event</h1>
 </header>
 <main>
+    <div th:if="${hasError}" style="color: red;">
+        <p th:text="${error}"></p>
+    </div>
     <form th:method="POST" th:action="|${event != null ? '/events/edit/' + event.id : '/events/add'}|">
         <div>
             <label for="name">Event Name:</label>

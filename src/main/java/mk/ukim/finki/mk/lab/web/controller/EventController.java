@@ -59,10 +59,18 @@ public class EventController {
                             @RequestParam String description,
                             @RequestParam double popularityScore,
                             @RequestParam Long locationId,
-                            @RequestParam double ticketsAvailable) throws LocationNotFoundException, EventNotFoundException {
+                            @RequestParam double ticketsAvailable,
+                            Model model) throws LocationNotFoundException, EventNotFoundException {
 
-        eventService.saveEvent(name, description, popularityScore, locationId, (int) ticketsAvailable);
-        return "redirect:/events";
+        try {
+            eventService.saveEvent(name, description, popularityScore, locationId, (int)ticketsAvailable);
+            return "redirect:/events";
+        } catch (IllegalArgumentException | LocationNotFoundException e) {
+            model.addAttribute("hasError", true);
+            model.addAttribute("error", e.getMessage());
+            model.addAttribute("locations", locationService.findAll());
+            return "add-event";
+        }
     }
 
     @PostMapping("/edit/{eventId}")
@@ -70,10 +78,17 @@ public class EventController {
                             @RequestParam String description,
                             @RequestParam double popularityScore,
                             @RequestParam Long locationId,
-                            @RequestParam double ticketsAvailable) throws EventNotFoundException, LocationNotFoundException {
+                            @RequestParam double ticketsAvailable, Model model) throws EventNotFoundException, LocationNotFoundException {
 
-        eventService.editEvent(eventId, name, description, popularityScore, locationId, (int) ticketsAvailable);
-        return "redirect:/events";
+        try {
+            eventService.editEvent(eventId, name, description, popularityScore, locationId, (int)ticketsAvailable);
+            return "redirect:/events";
+        } catch (IllegalArgumentException | EventNotFoundException | LocationNotFoundException e) {
+            model.addAttribute("hasError", true);
+            model.addAttribute("error", e.getMessage());
+            model.addAttribute("locations", locationService.findAll());
+            return "add-event";
+        }
     }
 
     @PostMapping("/delete/{id}")
