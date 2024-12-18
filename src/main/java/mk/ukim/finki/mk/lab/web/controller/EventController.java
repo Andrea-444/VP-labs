@@ -6,6 +6,7 @@ import mk.ukim.finki.mk.lab.model.exceptions.EventNotFoundException;
 import mk.ukim.finki.mk.lab.model.exceptions.LocationNotFoundException;
 import mk.ukim.finki.mk.lab.service.EventService;
 import mk.ukim.finki.mk.lab.service.LocationService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -55,6 +56,7 @@ public class EventController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')")
     public String saveEvent(@RequestParam String name,
                             @RequestParam String description,
                             @RequestParam double popularityScore,
@@ -74,6 +76,7 @@ public class EventController {
     }
 
     @PostMapping("/edit/{eventId}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')")
     public String editEvent(@PathVariable Long eventId, @RequestParam String name,
                             @RequestParam String description,
                             @RequestParam double popularityScore,
@@ -92,18 +95,21 @@ public class EventController {
     }
 
     @PostMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteEvent(@PathVariable Long id) {
         eventService.deleteEvent(id);
         return "redirect:/events";
     }
 
     @GetMapping("/add-form")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')")
     public String getAddEventPage(Model model) {
         model.addAttribute("locations", locationService.findAll());
         return "add-event";
     }
 
     @GetMapping("/edit-form/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')")
     public String getEditEventPage(@PathVariable Long id, Model model) {
         if (this.eventService.findEventById(id).isPresent()) {
             Event event = this.eventService.findEventById(id).get();

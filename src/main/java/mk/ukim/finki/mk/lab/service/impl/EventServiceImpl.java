@@ -147,6 +147,7 @@ public class EventServiceImpl implements EventService {
         if (location.isPresent()) {
 
             event.setLocation(location.get());
+            event.setTickets(tickets);
             return Optional.of(eventRepository.save(event));
         }
         throw new IllegalArgumentException("Invalid location ID");

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8">
     <title>Event Booking page - Welcome and choose an Event</title>
@@ -12,7 +12,14 @@
 </head>
 <body>
 <header>
-    <h1>Welcome to our Event Booking App</h1>
+    <header>
+        <h1>Welcome to our Event Booking App</h1>
+        <div sec:authorize="isAuthenticated()" class="logout-container" style="text-align: right;">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    </header>
 </header>
 <main>
     <script>
@@ -65,10 +72,14 @@
         <!--      Category: <span th:text="${event.category}"></span><br>-->
         Location: <span th:text="${event.location.name}"></span><br>
         Tickets available: <span th:text="${event.getTickets()}"></span><br>
+        <th:block sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')">
         <a th:href="@{'/events/edit-form/{id}' (id=${event.getId()})}">Edit</a>
+        </th:block>
+        <th:block sec:authorize="hasRole('ROLE_ADMIN')">
         <form th:method="DELETE" th:action="@{'/events/delete/{id}' (id=${event.getId()})}">
             <button type="submit">Delete</button>
         </form>
+        </th:block>
         <!--      <form th:method="POST" th:action="@{'/events/liked'}">-->
         <!--        <input type="hidden" name="id" th:value="${event.getId()}"/>-->
         <!--        <button type="submit" th:disabled="${likedEvents.contains(event.getId())}">Like</button>      </form>-->
@@ -99,7 +110,9 @@
     </form>
 
     <div>
+        <th:block sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')">
         <a href="/events/add-form">Add new event</a>
+        </th:block>
     </div>
 
 </main>
