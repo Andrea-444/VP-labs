@@ -37,5 +37,6 @@ public class EventBookingServiceImpl implements EventBookingService {
         userRepository.save(newUser);
 
         EventBooking newBooking = new EventBooking(eventName, attendeeName, attendeeAddress, (long) numberOfTickets, newUser);
+        newUser.getBookings().add(newBooking);
         return eventBookingRepository.save(newBooking);     }
 }

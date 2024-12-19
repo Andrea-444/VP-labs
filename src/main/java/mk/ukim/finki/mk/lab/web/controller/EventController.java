@@ -7,6 +7,8 @@ import mk.ukim.finki.mk.lab.model.exceptions.LocationNotFoundException;
 import mk.ukim.finki.mk.lab.service.EventService;
 import mk.ukim.finki.mk.lab.service.LocationService;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +46,11 @@ public class EventController {
 //        if (likedEvents == null) {
 //            likedEvents = new HashSet<>();
 //        }
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        model.addAttribute("username", username);
 
         model.addAttribute("searchText", searchText);
         model.addAttribute("minRating", minRating);

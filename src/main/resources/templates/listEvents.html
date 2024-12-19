@@ -103,9 +103,12 @@
 
         <label for="attendeeAddress">Address:</label>
         <input type="text" id="attendeeAddress" name="attendeeAddress" required><br><br/>
+<!--        <label for="username">Username:</label>-->
+<!--        <input type="text" id="username" name="username" required><br><br/>-->
 
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br><br/>
+<!--        <label for="username">Username:</label>-->
+        <input type="hidden" id="username" name="username" th:value="${username}"><br><br/>
+
         <input type="submit" value="Submit">
     </form>
 

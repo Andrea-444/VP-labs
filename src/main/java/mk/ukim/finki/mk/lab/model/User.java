@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -24,7 +25,7 @@ public class User {
     public User(String username, String name) {
         this.username = username;
         this.name = name;
-
+        this.bookings = new ArrayList<>();
     }
 
 }
